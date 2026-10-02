@@ -1,0 +1,10 @@
+# Fast checks on what is being committed. Full test suites run on pre-push.
+# Stop at the first failure, so a later passing step can never mask an earlier failing one.
+set -e
+
+# 1. Lint and format staged files (frontend: ESLint + Prettier, backend: dotnet format).
+bunx lint-staged
+
+# 2. Type-check the whole frontend: a change in one file can break types in another, so staged-only is not enough.
+#    Note the order: `bun run --cwd client <script>`. `bun --cwd client run` prints help and exits 0.
+bun run --cwd client typecheck

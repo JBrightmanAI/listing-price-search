@@ -1,0 +1,23 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+**/.vs/
+**/.vscode/
+**/.idea/
+**/*.user
+**/TestResults/
+artifacts/
+.env
+.env.*
+node_modules/
+.husky/
+package.json
+bun.lock
+# The API image is built from the repo root; the client has its own context and .dockerignore.
+client/
+.git/
+.github/
+tests/
+*.pdf
+*.md

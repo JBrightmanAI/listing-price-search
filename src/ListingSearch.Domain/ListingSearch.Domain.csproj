@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Domain has no dependencies on purpose: it is plain C# and knows nothing about storage, HTTP or DI. -->
+
+</Project>

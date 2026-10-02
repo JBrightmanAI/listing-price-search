@@ -1,0 +1,56 @@
+# One command for the whole application:
+#   docker compose up --build        then open http://localhost:8080
+#
+# Settings come from .env next to this file (see .env.example); every one has a default below.
+#
+# web (nginx) is the only service published to the host. It serves the UI and proxies
+# /api and /health to the api service, which is reachable only on the internal network.
+
+name: listing-search
+
+x-hardening: &hardening
+  restart: unless-stopped
+  read_only: true
+  tmpfs:
+    - /tmp
+  security_opt:
+    - no-new-privileges:true
+
+services:
+  api:
+    <<: *hardening
+    build:
+      context: .
+      dockerfile: src/ListingSearch.Api/Dockerfile
+    image: listing-search-api:local
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      # Trust X-Forwarded-* from nginx. Safe because the api port is not published.
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      RateLimiting__PermitLimit: ${RATE_LIMIT_PER_MINUTE:-60}
+      Scoring__BudgetWeight: ${SCORING_BUDGET_WEIGHT:-0.7}
+      Scoring__RecencyWeight: ${SCORING_RECENCY_WEIGHT:-0.3}
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health/ready"]
+      interval: 10s
+      timeout: 3s
+      start_period: 10s
+      retries: 5
+
+  web:
+    <<: *hardening
+    build:
+      context: ./client
+    image: listing-search-web:local
+    ports:
+      - "${WEB_PORT:-8080}:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3

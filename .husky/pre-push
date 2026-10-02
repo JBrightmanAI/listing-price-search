@@ -1,0 +1,4 @@
+# Everything CI checks, before code leaves the machine. Same command developers run by hand.
+set -e
+
+bun run check

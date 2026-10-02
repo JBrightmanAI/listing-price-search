@@ -1,0 +1,14 @@
+# Store and check out text files with LF everywhere. Shell hooks (.husky/*) break with CRLF on
+# macOS/Linux, and Prettier enforces LF, so Windows autocrlf must not rewrite line endings.
+* text=auto eol=lf
+
+# Windows-only scripts keep CRLF.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary: never diff or convert.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.ico binary

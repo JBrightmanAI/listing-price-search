@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Search property listings from multiple MLS feeds, ranked by relevance." />
+    <title>Listing Search</title>
+    <!-- Blocking on purpose: it must set the theme class before first paint. It is tiny and same-origin. -->
+    <script src="/theme-init.js"></script>
+  </head>
+  <body>
+    <noscript>This application needs JavaScript enabled.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

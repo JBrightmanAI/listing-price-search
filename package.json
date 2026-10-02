@@ -1,0 +1,25 @@
+{
+  "name": "listing-search-repo",
+  "private": true,
+  "description": "Repository entry point: one command for each task across the API (src/) and the UI (client/).",
+  "scripts": {
+    "prepare": "husky",
+    "setup": "bun install && bun install --cwd client && dotnet restore ListingSearch.slnx",
+    "dev": "concurrently --kill-others --names api,web --prefix-colors blue,magenta \"bun run dev:api\" \"bun run dev:web:after-api\"",
+    "dev:web:after-api": "echo Waiting for the API to report ready... && wait-on --interval 500 http-get://127.0.0.1:5001/health/ready && bun run dev:web",
+    "dev:api": "dotnet watch --project src/ListingSearch.Api --non-interactive run --launch-profile http",
+    "dev:web": "bun run --cwd client dev",
+    "test": "concurrently --group --names api,web --prefix-colors blue,magenta \"bun run test:api\" \"bun run test:web\"",
+    "test:api": "dotnet test ListingSearch.slnx --nologo -c Release",
+    "test:web": "bun run --cwd client test",
+    "check": "dotnet format ListingSearch.slnx --verify-no-changes && bun run --cwd client check && bun run test:api",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "wait-on": "^9.5.1"
+  }
+}

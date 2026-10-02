@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ListingSearch.Api/ListingSearch.Api.csproj" />
+    <Project Path="src/ListingSearch.Application/ListingSearch.Application.csproj" />
+    <Project Path="src/ListingSearch.Domain/ListingSearch.Domain.csproj" />
+    <Project Path="src/ListingSearch.Infrastructure/ListingSearch.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ListingSearch.IntegrationTests/ListingSearch.IntegrationTests.csproj" />
+    <Project Path="tests/ListingSearch.UnitTests/ListingSearch.UnitTests.csproj" />
+  </Folder>
+</Solution>

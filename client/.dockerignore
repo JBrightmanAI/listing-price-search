@@ -1,0 +1,12 @@
+node_modules/
+dist/
+# Local env files must not leak into the image: Vite inlines VITE_* values into the bundle at build time.
+.env
+.env.*
+!.env.example
+coverage/
+*.log
+.vscode/
+.idea/
+Dockerfile
+.dockerignore
